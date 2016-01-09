@@ -15,20 +15,24 @@
             var markers = [];
             var route;
             var routes = [];
+            var myOptions;
+            var directionDisplayOption;
+            var directionsService;
+            var directionsDisplay;
+            var map;
 
             function initialize() {
-                var myOptions = {
+                myOptions = {
                     zoom: 17,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
-                var directionDisplayOption = {
+                directionDisplayOption = {
                     preserveViewport: true,
                     suppressMarkers: true
                 }
-
-                var map = new google.maps.Map(document.getElementById("map"), myOptions);
-                var directionsService = new google.maps.DirectionsService;
-                var directionsDisplay = new google.maps.DirectionsRenderer;
+                map = new google.maps.Map(document.getElementById("map"), myOptions);
+                directionsService = new google.maps.DirectionsService;
+                directionsDisplay = new google.maps.DirectionsRenderer;
                 directionsDisplay.setOptions(directionDisplayOption);
 
                 directionsDisplay.setMap(map);
@@ -116,9 +120,37 @@
                     }, 0000);
                 });
             }
+
+            function inputDestination() {
+                marker.setMap(null);
+                markers.push(new google.maps.Marker({
+                    position: initialLocation,
+                    map: map,
+                    title: 'Initial Location'
+                }));
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }
+                var destination = document.getElementById("destination").value;
+                directionsService.route({
+                    origin: markers[0].getPosition(),
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING
+                }, function (response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+            }
         </script>
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzz7sYOs-X9XukY6sFUFJf9HSe1VrzNGw&callback=initialize">
         </script>
+        <form>
+            <input type="text" placeholder="Destination" id="destination"/>
+            <input type="button" value="Show" onclick="inputDestination()"/>
+        </form>
     </body>
 </html>
