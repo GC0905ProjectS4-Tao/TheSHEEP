@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            html, body { height: 100%; margin: 0; padding: 0; }
+            #map { height: 100%; }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script type="text/javascript">
+            var initialLocation;
+            var browserSupportFlag = new Boolean();
+            var marker;
+            var markers = [];
+            var route;
+            var routes = [];
+
+            function initialize() {
+                var myOptions = {
+                    zoom: 17,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map"), myOptions);
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer;
+
+                directionsDisplay.setMap(map);
+
+                if (navigator.geolocation) {
+                    browserSupportFlag = true;
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        map.setCenter(initialLocation);
+                        marker = new google.maps.Marker({
+                            draggable: true,
+                            position: initialLocation,
+                            map: map,
+                            title: 'Current Location'
+                        });
+                    }, function () {
+                        handleNoGeolocation(browserSupportFlag);
+                    });
+
+
+                }
+                else {
+                    browserSupportFlag = false;
+                    handleNoGeolocation(browserSupportFlag);
+                }
+
+                function handleNoGeolocation(errorFlag) {
+                    if (errorFlag === true) {
+                        alert("Geolocation service failed! We've placed you in New York.");
+                        initialLocation = google.maps.LatLng(40.69847032728747, -73.9514422416687);
+                    } else {
+                        alert("Your browser doesn't support geolocation. We've placed you in New York.");
+                        initialLocation = google.maps.LatLng(40.69847032728747, -73.9514422416687);
+                    }
+                    map.setCenter(initialLocation);
+                    marker = new google.maps.Marker({
+                        draggable: true,
+                        position: initialLocation,
+                        map: map,
+                        title: 'Current Location'
+                    });
+                }
+
+                //Onclick event
+                map.addListener('click', function (mousePosition) {
+                    // 0 seconds delay
+                    window.setTimeout(function () {
+                        marker.setMap(null);
+                        markers.push(new google.maps.Marker({
+                            position: initialLocation,
+                            map: map,
+                            title: 'Initial Location'
+                        }));
+                        for (var i = 0; i < markers.length; i++) {
+                            markers[i].setMap(map);
+                        }
+                        marker = new google.maps.Marker({
+                            position: mousePosition.latLng,
+                            map: map,
+                            draggable: true,
+                            title: 'Current Location'
+                        });
+
+                        directionsService.route({
+                            origin: markers[0].getPosition(),
+                            destination: marker.getPosition(),
+                            travelMode: google.maps.TravelMode.DRIVING
+                        }, function (response, status) {
+                            if (status === google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                            } else {
+                                window.alert('Directions request failed due to ' + status);
+                            }
+                        });
+                    }, 0000);
+                });
+            }
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzz7sYOs-X9XukY6sFUFJf9HSe1VrzNGw&callback=initialize">
+        </script>
+    </body>
+</html>

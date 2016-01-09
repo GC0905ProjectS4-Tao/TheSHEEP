@@ -5,7 +5,7 @@
  */
 package test;
 
-import Class.distanceMatrix;
+import Model.distanceMatrix;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
