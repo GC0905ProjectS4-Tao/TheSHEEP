@@ -22,7 +22,8 @@
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 var directionDisplayOption = {
-                    preserveViewport: true
+                    preserveViewport: true,
+                    suppressMarkers: true
                 }
 
                 var map = new google.maps.Map(document.getElementById("map"), myOptions);
@@ -86,7 +87,7 @@
                         position: mousePosition.latLng,
                         map: map,
                         draggable: true,
-                        title: 'Destination'
+                        title: 'Deliver Location'
                     });
                 }
 
