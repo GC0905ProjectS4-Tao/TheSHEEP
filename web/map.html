@@ -105,25 +105,13 @@
                 }
 
                 map.addListener('click', function (mousePosition) {
-                    window.setTimeout(function () {
-                        setDestination(mousePosition);
-                        direction();
-                    }, 0000);
+                    setDestination(mousePosition);
+                    direction();
                 });
 
-                map.addListener('dragend', function (mousePosition) {
+                map.addListener('dragend', function () {
                     window.setTimeout(function () {
-                        directionsService.route({
-                            origin: markers[0].getPosition(),
-                            destination: marker.getPosition(),
-                            travelMode: google.maps.TravelMode.DRIVING
-                        }, function (response, status) {
-                            if (status === google.maps.DirectionsStatus.OK) {
-                                directionsDisplay.setDirections(response);
-                            } else {
-                                window.alert('Directions request failed due to ' + status);
-                            }
-                        });
+                        direction();
                     }, 0000);
                 });
             }
