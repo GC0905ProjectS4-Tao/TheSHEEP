@@ -36,8 +36,9 @@ public class Map {
     }
     
     @GET
+    @Path("{origin}/{destination}")
     @Produces({"application/xml", "application/json"})
     public String get(@PathParam("origin") String origin, @PathParam("destination") String destination) {
-        return GoogleMap.getDistance(origin, destination);
+        return GoogleMap.getDistance(origin, destination).toString();
     }
 }
