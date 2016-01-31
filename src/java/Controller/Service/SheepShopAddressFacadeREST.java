@@ -84,7 +84,7 @@ public class SheepShopAddressFacadeREST extends AbstractFacade<SheepShopAddress>
     }
 
     @GET
-    @Path("distace/{shop_id}")
+    @Path("distance/{shop_id}")
     @Produces({"application/xml", "application/json"})
     public reDistance distanceREST(@PathParam("shop_id") Integer shop_id) {
         return new reDistance("1", BigDecimal.ZERO, BigDecimal.ZERO);
