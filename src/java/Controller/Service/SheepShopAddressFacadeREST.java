@@ -6,6 +6,8 @@
 package Controller.Service;
 
 import Model.Entity.SheepShopAddress;
+import Model.Return.reDistance;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -79,6 +81,13 @@ public class SheepShopAddressFacadeREST extends AbstractFacade<SheepShopAddress>
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
+    }
+
+    @GET
+    @Path("distace/{shop_id}")
+    @Produces({"application/xml", "application/json"})
+    public reDistance distanceREST(@PathParam("shop_id") Integer shop_id) {
+        return new reDistance("1", BigDecimal.ZERO, BigDecimal.ZERO);
     }
 
     @Override

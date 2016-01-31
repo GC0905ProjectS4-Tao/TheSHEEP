@@ -29,5 +29,6 @@ public interface SheepShopAddressFacadeLocal {
     List<SheepShopAddress> findRange(int[] range);
 
     int count();
-    
+
+    String getShippingFees(int id);
 }

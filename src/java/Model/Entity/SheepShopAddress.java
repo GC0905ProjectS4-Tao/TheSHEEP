@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SheepShopAddress.findById", query = "SELECT s FROM SheepShopAddress s WHERE s.id = :id"),
     @NamedQuery(name = "SheepShopAddress.findByShopId", query = "SELECT s FROM SheepShopAddress s WHERE s.shopId = :shopId"),
     @NamedQuery(name = "SheepShopAddress.findByAddress", query = "SELECT s FROM SheepShopAddress s WHERE s.address = :address"),
-    @NamedQuery(name = "SheepShopAddress.findByCreated", query = "SELECT s FROM SheepShopAddress s WHERE s.created = :created")})
+    @NamedQuery(name = "SheepShopAddress.findByCreated", query = "SELECT s FROM SheepShopAddress s WHERE s.created = :created"),
+    @NamedQuery(name = "SheepShopAddress.findByShippingFees", query = "SELECT s FROM SheepShopAddress s WHERE s.shippingFees = :shippingFees")})
 public class SheepShopAddress implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,6 +53,9 @@ public class SheepShopAddress implements Serializable {
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+    @Size(max = 2147483647)
+    @Column(name = "shipping_fees")
+    private String shippingFees;
 
     public SheepShopAddress() {
     }
@@ -95,6 +99,14 @@ public class SheepShopAddress implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public String getShippingFees() {
+        return shippingFees;
+    }
+
+    public void setShippingFees(String shippingFees) {
+        this.shippingFees = shippingFees;
     }
 
     @Override

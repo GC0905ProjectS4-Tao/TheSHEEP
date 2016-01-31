@@ -29,7 +29,6 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(Controller.Map.class);
         resources.add(Controller.Service.SheepAccountFacadeREST.class);
         resources.add(Controller.Service.SheepOrderFacadeREST.class);
         resources.add(Controller.Service.SheepRoleFacadeREST.class);

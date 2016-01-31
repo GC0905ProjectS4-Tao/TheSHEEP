@@ -9,6 +9,7 @@ import Model.Entity.SheepShopAddress;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class SheepShopAddressFacade extends AbstractFacade<SheepShopAddress> implements SheepShopAddressFacadeLocal {
+
     @PersistenceContext(unitName = "TheSHEEPPU")
     private EntityManager em;
 
@@ -27,5 +29,19 @@ public class SheepShopAddressFacade extends AbstractFacade<SheepShopAddress> imp
     public SheepShopAddressFacade() {
         super(SheepShopAddress.class);
     }
-    
+
+    @Override
+    public String getShippingFees(int id) {
+        Query query = em.createNamedQuery("SheepShopAddress.findById");
+        query.setParameter("id", id);
+        try {
+            SheepShopAddress ssa = (SheepShopAddress) query.getSingleResult();
+            System.out.println(ssa.getShippingFees());
+            return ssa.getShippingFees();
+        } catch (Exception e) {
+            System.out.println("SESSION FALSE");
+            return "SESSION FALSE";
+        }
+    }
+
 }

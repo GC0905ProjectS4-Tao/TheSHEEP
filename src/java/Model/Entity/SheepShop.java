@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SheepShop.findById", query = "SELECT s FROM SheepShop s WHERE s.id = :id"),
     @NamedQuery(name = "SheepShop.findByName", query = "SELECT s FROM SheepShop s WHERE s.name = :name"),
     @NamedQuery(name = "SheepShop.findByBrand", query = "SELECT s FROM SheepShop s WHERE s.brand = :brand"),
-    @NamedQuery(name = "SheepShop.findByCreated", query = "SELECT s FROM SheepShop s WHERE s.created = :created")})
+    @NamedQuery(name = "SheepShop.findByCreated", query = "SELECT s FROM SheepShop s WHERE s.created = :created"),
+    @NamedQuery(name = "SheepShop.findByShippingFees", query = "SELECT s FROM SheepShop s WHERE s.shippingFees = :shippingFees")})
 public class SheepShop implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,6 +54,9 @@ public class SheepShop implements Serializable {
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+    @Size(max = 2147483647)
+    @Column(name = "shipping_fees")
+    private String shippingFees;
 
     public SheepShop() {
     }
@@ -96,6 +100,14 @@ public class SheepShop implements Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public String getShippingFees() {
+        return shippingFees;
+    }
+
+    public void setShippingFees(String shippingFees) {
+        this.shippingFees = shippingFees;
     }
 
     @Override

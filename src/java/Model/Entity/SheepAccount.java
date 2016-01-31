@@ -82,7 +82,7 @@ public class SheepAccount implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date edited;
     @Column(name = "balance")
-    private BigInteger balance;
+    private String balance;
 
     public SheepAccount() {
     }
@@ -177,11 +177,11 @@ public class SheepAccount implements Serializable {
         this.edited = edited;
     }
 
-    public BigInteger getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(BigInteger balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
     }
 

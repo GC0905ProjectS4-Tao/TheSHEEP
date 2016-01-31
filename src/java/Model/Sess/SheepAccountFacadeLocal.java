@@ -6,6 +6,7 @@
 package Model.Sess;
 
 import Model.Entity.SheepAccount;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface SheepAccountFacadeLocal {
     List<SheepAccount> findRange(int[] range);
 
     int count();
+
+    public boolean transfer(String user, String user2, String money, Boolean pay);
     
 }
